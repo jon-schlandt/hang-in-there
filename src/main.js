@@ -7,9 +7,10 @@ var mainSection = document.querySelector(".main-poster");
 var makePosterSection = document.querySelector(".poster-form");
 var savePosterSection = document.querySelector(".saved-posters");
 
+var savePosterButton = document.querySelector(".save-poster")
 var randomizePosterButton = document.querySelector(".show-random");
 var showFormButton = document.querySelector(".show-form");
-var savePosterButton = document.querySelector(".show-saved");
+var showSavedPostersButton = document.querySelector(".show-saved");
 var takeMeBackButton = document.querySelector(".show-main");
 var backToMainButton = document.querySelector(".back-to-main");
 var makePosterButton = document.querySelector(".make-poster")
@@ -125,10 +126,12 @@ window.addEventListener("load", sendPoster);
 randomizePosterButton.addEventListener("click", sendPoster);
 
 showFormButton.addEventListener("click", setUnhiddenMakeOwnPoster);
-savePosterButton.addEventListener("click", setUnhiddenSavedPoster);
+showSavedPostersButton.addEventListener("click", setUnhiddenSavedPoster);
 takeMeBackButton.addEventListener("click", takeMeBack);
 backToMainButton.addEventListener("click", backToMain);
 makePosterButton.addEventListener("click", makePoster);
+savePosterButton.addEventListener("click", savePoster)
+
 
 // functions and event handlers go here 👇
 // (we've provided one for you to get you started)!
@@ -150,6 +153,28 @@ function makePoster(){
     titleEl.innerText = savedPosters[0].title;
     quoteEl.innerText = savedPosters[0].quote;
     takeMeBack()
+}
+
+
+
+
+function savePoster() {
+  newPoster = new Poster(imageEl.src, titleEl.innerText, quoteEl.innerText);
+  savedPosters.push(newPoster)
+
+ for(var i = 0; i < 10; i++){
+   if(savedPosters[i].quote === newPoster.quote){
+   } 
+
+
+
+
+
+
+
+ }
+ console.log(savedPosters)
+ 
 }
 
 function getPoster() {
