@@ -136,48 +136,51 @@ savePosterButton.addEventListener("click", savePoster)
 // functions and event handlers go here 👇
 // (we've provided one for you to get you started)!
 function sendPoster() {
-   var poster = getPoster();
+   var poster = randomizePoster();
 
-   imageEl.setAttribute("src", poster.imageURL);
+   imageEl.src = poster.imageURL;
    titleEl.innerText = poster.title;
    quoteEl.innerText = poster.quote;
 }
 function makePoster(){
-    var newPoster = new Poster(
-    posterImageUrl.value, 
-    posterTitle.value, 
-    posterQuote.value,)
+    var poster = new Poster(posterImageUrl.value, posterTitle.value, posterQuote.value,)
 
-    savedPosters.push(newPoster)
-    imageEl.src = savedPosters[0].imageURL;
-    titleEl.innerText = savedPosters[0].title;
-    quoteEl.innerText = savedPosters[0].quote;
+    imageEl.src = poster.imageURL;
+    images.push(poster.imageURL);
+    titleEl.innerText = poster.title;
+    titles.push(poster.title);
+    quoteEl.innerText = poster.quote;
+    quotes.push(poster.quote);
+
     takeMeBack()
 }
 
-
-
-
 function savePoster() {
-  newPoster = new Poster(imageEl.src, titleEl.innerText, quoteEl.innerText);
-  savedPosters.push(newPoster)
+  var poster = new Poster(imageEl.src, titleEl.innerText, quoteEl.innerText);
+  var isPresent = checkPresence(poster);
 
- for(var i = 0; i < 10; i++){
-   if(savedPosters[i].quote === newPoster.quote){
-   } 
-
-
-
-
-
-
-
- }
- console.log(savedPosters)
- 
+  if (!isPresent) {
+    savedPosters.push(poster);
+  }
 }
 
-function getPoster() {
+function checkPresence(poster) {
+  var posterKey = `${poster.imageURL}${poster.title}${poster.quote}`;
+  var savedPosterKey;
+  var isPresent = false;
+  
+  for (var i = 0; i < savedPosters.length; i++) {
+    savedPosterKey = `${savedPosters[i].imageURL}${savedPosters[i].title}${savedPosters[i].quote}`;
+
+    if (posterKey === savedPosterKey) {
+      isPresent = true;
+    }
+  }
+
+  return isPresent;
+}
+
+function randomizePoster() {
   return new Poster(
     getRandomElement(images), 
     getRandomElement(titles), 
@@ -195,9 +198,7 @@ function getRandomIndex(array) {
 function setUnhiddenMakeOwnPoster() {
   makePosterSection.classList.remove("hidden");
   mainSection.classList.add("hidden");
-  
 }
-
 
 function setUnhiddenSavedPoster() {
   savePosterSection.classList.remove("hidden");
