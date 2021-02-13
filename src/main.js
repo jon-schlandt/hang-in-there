@@ -159,17 +159,18 @@ function makePoster(){
 function savePoster() {
   var poster = new Poster(imageEl.src, titleEl.innerText, quoteEl.innerText);
   var isPresent = checkPresence(poster);
+  var savedPoster;
 
   if (!isPresent) {
     savedPosters.push(poster);
   }
-  var randomID = Math.random
+  var randomID = Math.floor(Math.random() * 1000);
 
   
-    savedPostersGrid.innerHTML += `<div class ="mini-poster" id=${randomID}></div>`
-    
-    console.log(savedPostersGrid)
-  
+  savedPostersGrid.innerHTML += `<div class ="mini-poster" id=${randomID}></div>`;
+  savedPoster = document.getElementById(randomID);
+  savedPoster.innerHTML = `<img src="${poster.imageURL}" alt="nothin' to see here">` +
+  `<h2 class="poster-title">${poster.title}</h2><h4 class="poster-quote">${poster.quote}</h4>`
 }
 
 function checkPresence(poster) {
