@@ -143,6 +143,7 @@ function sendPoster() {
    titleEl.innerText = poster.title;
    quoteEl.innerText = poster.quote;
 }
+
 function makePoster(){
     var poster = new Poster(posterImageUrl.value, posterTitle.value, posterQuote.value,)
 
@@ -151,7 +152,7 @@ function makePoster(){
     titleEl.innerText = poster.title;
     titles.push(poster.title);
     quoteEl.innerText = poster.quote;
-    quotes.push(poster.quote);
+    quotes.push(poster.quote)
 
     takeMeBack()
 }
