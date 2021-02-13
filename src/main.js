@@ -1,4 +1,4 @@
-// query selector variables go here 👇
+// Query Selectors
 var imageEl = document.querySelector(".poster-img");
 var titleEl = document.querySelector(".poster-title");
 var quoteEl = document.querySelector(".poster-quote");
@@ -16,12 +16,11 @@ var takeMeBackButton = document.querySelector(".show-main");
 var backToMainButton = document.querySelector(".back-to-main");
 var makePosterButton = document.querySelector(".make-poster")
 
-
 var posterImageUrl = document.querySelector("#poster-image-url");
 var posterTitle = document.querySelector("#poster-title");
 var posterQuote = document.querySelector("#poster-quote");
 
-// we've provided you with some data to work with 👇
+// Data
 var images = [
   "./assets/bees.jpg",
   "./assets/bridge.jpg",
@@ -122,7 +121,7 @@ var quotes = [
 var savedPosters = [];
 var currentPoster;
 
-// event listeners go here 👇
+// Event Listeners
 window.addEventListener("load", sendPoster);
 randomizePosterButton.addEventListener("click", sendPoster);
 
@@ -134,8 +133,7 @@ makePosterButton.addEventListener("click", makePoster);
 savePosterButton.addEventListener("click", savePoster)
 
 
-// functions and event handlers go here 👇
-// (we've provided one for you to get you started)!
+// Event Handlers/Helper Functions
 function sendPoster() {
    var poster = randomizePoster();
 
@@ -144,7 +142,8 @@ function sendPoster() {
    quoteEl.innerText = poster.quote;
 }
 
-function makePoster(){
+function makePoster(event){
+    event.preventDefault();
     var poster = new Poster(posterImageUrl.value, posterTitle.value, posterQuote.value,)
 
     imageEl.src = poster.imageURL;
@@ -161,18 +160,17 @@ function savePoster() {
   var poster = new Poster(imageEl.src, titleEl.innerText, quoteEl.innerText);
   var isPresent = checkPresence(poster);
   var savedPoster;
+  var randomID = Math.floor(Math.random() * 1000);
 
   if (!isPresent) {
     savedPosters.push(poster);
   }
-  var randomID = Math.floor(Math.random() * 1000);
-
   
-  savedPostersGrid.innerHTML += `<div class ="mini-poster" id=${randomID}></div>`;
+  savedPostersGrid.innerHTML += `<div ondblclick="removePoster(document.getElementById(${randomID}))" class ="mini-poster" id=${randomID}></div>`;
   savedPoster = document.getElementById(randomID);
   savedPoster.innerHTML = `<img src="${poster.imageURL}" alt="nothin' to see here">` +
-  `<h2 class="poster-title">${poster.title}</h2><h4 class="poster-quote">${poster.quote}</h4>`
-}
+  `<h2 class="poster-title">${poster.title}</h2><h4 class="poster-quote">${poster.quote}</h4>`;
+  }
 
 function checkPresence(poster) {
   var posterKey = `${poster.imageURL}${poster.title}${poster.quote}`;
@@ -188,6 +186,10 @@ function checkPresence(poster) {
   }
 
   return isPresent;
+}
+
+function removePoster(poster) {
+  poster.remove();
 }
 
 function randomizePoster() {
