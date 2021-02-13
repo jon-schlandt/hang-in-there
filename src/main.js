@@ -6,6 +6,7 @@ var quoteEl = document.querySelector(".poster-quote");
 var mainSection = document.querySelector(".main-poster");
 var makePosterSection = document.querySelector(".poster-form");
 var savePosterSection = document.querySelector(".saved-posters");
+var savedPostersGrid = document.querySelector(".saved-posters-grid")
 
 var savePosterButton = document.querySelector(".save-poster")
 var randomizePosterButton = document.querySelector(".show-random");
@@ -162,6 +163,13 @@ function savePoster() {
   if (!isPresent) {
     savedPosters.push(poster);
   }
+  var randomID = Math.random
+
+  
+    savedPostersGrid.innerHTML += `<div class ="mini-poster" id=${randomID}></div>`
+    
+    console.log(savedPostersGrid)
+  
 }
 
 function checkPresence(poster) {
