@@ -151,8 +151,21 @@ function sendMainPoster() {
 
 function makePoster(event){
     event.preventDefault();
-    var poster = new Poster(posterImageUrl.value, posterTitle.value, posterQuote.value,)
+    var poster = new Poster(posterImageUrl.value, posterTitle.value, posterQuote.value);
 
+    if(!poster.imageURL){
+      window.alert("Please provide an image.");
+      throw "No data provided in image field";
+    }
+    if(!poster.title){
+      window.alert("Please provide a title.");
+      throw "No data provided in title field";
+    }
+    if(!poster.quote){
+      window.alert("Please provide a quote.");
+      throw "No data provided in quote field";
+    }
+    
     imageEl.src = poster.imageURL;
     images.push(poster.imageURL);
     titleEl.innerText = poster.title;
