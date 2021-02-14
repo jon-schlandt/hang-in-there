@@ -5,16 +5,16 @@ var quoteEl = document.querySelector(".poster-quote");
 
 var mainSection = document.querySelector(".main-poster");
 var makePosterSection = document.querySelector(".poster-form");
-var savePosterSection = document.querySelector(".saved-posters");
-var savedPostersGrid = document.querySelector(".saved-posters-grid")
+var savedPostersSection = document.querySelector(".saved-posters");
+var savedPostersGrid = document.querySelector(".saved-posters-grid");
 
-var savePosterButton = document.querySelector(".save-poster")
+var savePosterButton = document.querySelector(".save-poster");
 var randomizePosterButton = document.querySelector(".show-random");
 var showFormButton = document.querySelector(".show-form");
 var showSavedPostersButton = document.querySelector(".show-saved");
 var takeMeBackButton = document.querySelector(".show-main");
 var backToMainButton = document.querySelector(".back-to-main");
-var makePosterButton = document.querySelector(".make-poster")
+var makePosterButton = document.querySelector(".make-poster");
 
 var posterImageUrl = document.querySelector("#poster-image-url");
 var posterTitle = document.querySelector("#poster-title");
@@ -119,22 +119,29 @@ var quotes = [
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
 var savedPosters = [];
-var currentPoster;
 
 // Event Listeners
-window.addEventListener("load", sendPoster);
-randomizePosterButton.addEventListener("click", sendPoster);
+window.addEventListener("load", sendMainPoster);
+randomizePosterButton.addEventListener("click", sendMainPoster);
 
-showFormButton.addEventListener("click", setUnhiddenMakeOwnPoster);
-showSavedPostersButton.addEventListener("click", setUnhiddenSavedPoster);
-takeMeBackButton.addEventListener("click", takeMeBack);
-backToMainButton.addEventListener("click", backToMain);
+showFormButton.addEventListener("click", function() { 
+  navToSection(mainSection, makePosterSection);
+ });
+showSavedPostersButton.addEventListener("click", function() { 
+  navToSection(mainSection, savedPostersSection); 
+});
+takeMeBackButton.addEventListener("click", function() { 
+  navToSection(makePosterSection, mainSection); 
+});
+backToMainButton.addEventListener("click", function() { 
+  navToSection(savedPostersSection, mainSection); 
+});
 makePosterButton.addEventListener("click", makePoster);
-savePosterButton.addEventListener("click", savePoster)
+savePosterButton.addEventListener("click", savePoster);
 
 
 // Event Handlers/Helper Functions
-function sendPoster() {
+function sendMainPoster() {
    var poster = randomizePoster();
 
    imageEl.src = poster.imageURL;
@@ -153,24 +160,29 @@ function makePoster(event){
     quoteEl.innerText = poster.quote;
     quotes.push(poster.quote)
 
-    takeMeBack()
+    navToSection(makePosterSection, mainSection);
 }
 
 function savePoster() {
   var poster = new Poster(imageEl.src, titleEl.innerText, quoteEl.innerText);
   var isPresent = checkPresence(poster);
-  var savedPoster;
-  var randomID = Math.floor(Math.random() * 1000);
 
   if (!isPresent) {
     savedPosters.push(poster);
+    sendMiniPoster(poster);
   }
-  
-  savedPostersGrid.innerHTML += `<div ondblclick="removePoster(document.getElementById(${randomID}))" class ="mini-poster" id=${randomID}></div>`;
+}
+
+function sendMiniPoster(poster) {
+  var savedPoster;
+  var randomID = Math.floor(Math.random() * 1000);
+
+  savedPostersGrid.innerHTML += `<div ondblclick="removePoster(document.getElementById(${randomID}))"` +
+  `class ="mini-poster" id=${randomID}></div>`;
   savedPoster = document.getElementById(randomID);
   savedPoster.innerHTML = `<img src="${poster.imageURL}" alt="nothin' to see here">` +
   `<h2 class="poster-title">${poster.title}</h2><h4 class="poster-quote">${poster.quote}</h4>`;
-  }
+}
 
 function checkPresence(poster) {
   var posterKey = `${poster.imageURL}${poster.title}${poster.quote}`;
@@ -207,22 +219,7 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-function setUnhiddenMakeOwnPoster() {
-  makePosterSection.classList.remove("hidden");
-  mainSection.classList.add("hidden");
-}
-
-function setUnhiddenSavedPoster() {
-  savePosterSection.classList.remove("hidden");
-  mainSection.classList.add("hidden");
-}
-
-function takeMeBack() {
-  makePosterSection.classList.add("hidden");
-  mainSection.classList.remove("hidden");
-}
-
-function backToMain() {
-  savePosterSection.classList.add("hidden");
-  mainSection.classList.remove("hidden");
+function navToSection(origin, destination) {
+  origin.classList.toggle("hidden");
+  destination.classList.toggle("hidden");
 }
