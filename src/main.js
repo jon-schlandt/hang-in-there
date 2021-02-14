@@ -119,18 +119,25 @@ var quotes = [
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
 var savedPosters = [];
-var currentPoster;
 
 // Event Listeners
 window.addEventListener("load", sendMainPoster);
 randomizePosterButton.addEventListener("click", sendMainPoster);
 
-showFormButton.addEventListener("click", function() { navToSection(makePosterSection, mainSection); });
-showSavedPostersButton.addEventListener("click", function() { navToSection(savedPostersSection, mainSection); });
-takeMeBackButton.addEventListener("click", takeMeBack);
-backToMainButton.addEventListener("click", backToMain);
+showFormButton.addEventListener("click", function() { 
+  navToSection(mainSection, makePosterSection);
+ });
+showSavedPostersButton.addEventListener("click", function() { 
+  navToSection(mainSection, savedPostersSection); 
+});
+takeMeBackButton.addEventListener("click", function() { 
+  navToSection(makePosterSection, mainSection); 
+});
+backToMainButton.addEventListener("click", function() { 
+  navToSection(savedPostersSection, mainSection); 
+});
 makePosterButton.addEventListener("click", makePoster);
-savePosterButton.addEventListener("click", savePoster)
+savePosterButton.addEventListener("click", savePoster);
 
 
 // Event Handlers/Helper Functions
@@ -153,7 +160,7 @@ function makePoster(event){
     quoteEl.innerText = poster.quote;
     quotes.push(poster.quote)
 
-    takeMeBack()
+    navToSection(makePosterSection, mainSection);
 }
 
 function savePoster() {
@@ -215,24 +222,4 @@ function getRandomIndex(array) {
 function navToSection(origin, destination) {
   origin.classList.toggle("hidden");
   destination.classList.toggle("hidden");
-}
-
-function setUnhiddenMakeOwnPoster() {
-  makePosterSection.classList.remove("hidden");
-  mainSection.classList.add("hidden");
-}
-
-function setUnhiddenSavedPoster() {
-  savePosterSection.classList.remove("hidden");
-  mainSection.classList.add("hidden");
-}
-
-function takeMeBack() {
-  makePosterSection.classList.add("hidden");
-  mainSection.classList.remove("hidden");
-}
-
-function backToMain() {
-  savePosterSection.classList.add("hidden");
-  mainSection.classList.remove("hidden");
 }
