@@ -8,6 +8,6 @@ This web application was designed and created in Javascript, HTML, and CSS.
 
 
 
-***USE BEWARE -- NOT ALL QUOTES SHOULD BE TAKEN LITERAL** 
+**USE BEWARE -- NOT ALL QUOTES SHOULD BE TAKEN LITERAL** 
 
 ![alt text](https://user-images.githubusercontent.com/27789047/107889032-4b4c0380-6ede-11eb-9327-6a9a941f7608.png "Inspirational Quote Poster")
